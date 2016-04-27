@@ -21,7 +21,8 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
         android:layout_weight="1"
-        android:layout_gravity="center_horizontal|top" />
+        android:layout_gravity="center_horizontal|top"
+        android:contentDescription="Bag" />
 
     <Button
         android:layout_width="170dp"
@@ -29,7 +30,8 @@
         android:text="Scan"
         android:id="@+id/scanButton"
         android:layout_gravity="left|bottom"
-        android:textSize="30dp" />
+        android:textSize="30dp"
+        android:onClick="openScan"/>
 
     <Button
         android:layout_width="170dp"
@@ -37,7 +39,8 @@
         android:text="@string/Totes"
         android:id="@+id/rewardButton"
         android:layout_gravity="right|bottom"
-        android:textSize="30dp" />
+        android:textSize="30dp"
+        android:onClick="openReward"/>
 
     <TextView
         android:layout_width="204dp"
