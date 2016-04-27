@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
@@ -18,8 +19,9 @@ import com.google.android.gms.common.api.GoogleApiClient;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button myScanButton;
-    private Button myRewardButton;
+//    public final static String EXTRA_MESSAGE = "com.example.Totes_Rewards.MESSAGE";
+//    private Button myScanButton;
+//    private Button myRewardButton;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -31,16 +33,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        myScanButton = (Button) findViewById(R.id.scanButton);
-        myRewardButton = (Button) findViewById(R.id.rewardButton);
+//        myScanButton = (Button) findViewById(R.id.scanButton);
+//        myRewardButton = (Button) findViewById(R.id.rewardButton);
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
-    private void setupButtons() {
-        myScanButton.setOnClickListener(new MenuButtonListener(ScanActivity.class));
-    }
+//    private void setupButtons() {
+//        myScanButton.setOnClickListener(new MenuButtonListener(ScanActivity.class));
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -104,26 +106,36 @@ public class MainActivity extends AppCompatActivity {
         client.disconnect();
     }
 
-    private class MenuButtonListener implements View.OnClickListener {
+//    private class MenuButtonListener implements View.OnClickListener {
+//
+//        /**
+//         * The activity class to start upon button press.
+//         */
+//        private Class myClass;
+//
+//        /**
+//         * Constructor for menu button listener.
+//         *
+//         * @param theClass the activity class to start on button press.
+//         */
+//        public MenuButtonListener(Class theClass) {
+//            myClass = theClass;
+//        }
+//
+//        @Override
+//        public void onClick(View v) {
+//            Intent intent = new Intent(MainActivity.this, myClass);
+//            startActivity(intent);
+//        }
+//    }
 
-        /**
-         * The activity class to start upon button press.
-         */
-        private Class myClass;
+    public void openScan(View view) {
+        Intent intent = new Intent(this, ScanActivity.class);
+        startActivity(intent);
+    }
 
-        /**
-         * Constructor for menu button listener.
-         *
-         * @param theClass the activity class to start on button press.
-         */
-        public MenuButtonListener(Class theClass) {
-            myClass = theClass;
-        }
-
-        @Override
-        public void onClick(View v) {
-            Intent intent = new Intent(MainActivity.this, myClass);
-            startActivity(intent);
-        }
+    public void openReward(View view) {
+        Intent intent = new Intent(this, RewardActivity.class);
+        startActivity(intent);
     }
 }
