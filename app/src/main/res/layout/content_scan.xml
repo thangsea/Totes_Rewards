@@ -16,8 +16,8 @@
         android:layout_width="241dp"
         android:layout_height="151dp"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Medium Text"
-        android:id="@+id/textView2"
+        android:id="@+id/barcodeResult"
+
         android:layout_gravity="center"
-        android:autoText="false" />
+         />
 </FrameLayout>
