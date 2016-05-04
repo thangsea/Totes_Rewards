@@ -3,11 +3,14 @@ package com.example.totes_rewards.totesrewards;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.support.annotation.RequiresPermission;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -18,6 +21,7 @@ import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
+import com.google.android.gms.vision.Frame;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
 
@@ -34,16 +38,18 @@ public class ScanActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        final TextView barcodeInfo = (TextView) findViewById(R.id.code_info);
+        //final TextView test = (TextView) findViewById(R.id.barcodeResult);
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_scan);
 
-        final SurfaceView cameraView = (SurfaceView) findViewById(R.id.camera_view);
-        final TextView barcodeInfo = (TextView) findViewById(R.id.code_info);
+        //make a barcode detector
+        BarcodeDetector barcodeDetector =
+                new BarcodeDetector.Builder(this)
+                        .setBarcodeFormats(Barcode.QR_CODE)
+                        .build();
 
-        final BarcodeDetector barcodeDetector = new BarcodeDetector.Builder(this)
-                .setBarcodeFormats(Barcode.QR_CODE)
-                .build();
+        final SurfaceView cameraView = (SurfaceView) findViewById(R.id.camera_view);
 
         final CameraSource cameraSource = new CameraSource.Builder(this, barcodeDetector)
                 .setRequestedPreviewSize(640, 480)
@@ -53,7 +59,8 @@ public class ScanActivity extends AppCompatActivity {
         cameraView.getHolder().addCallback(new SurfaceHolder.Callback() {
             @Override
             public void surfaceCreated(SurfaceHolder holder) {
-                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                Context context = cameraView.getContext();
+                if (ActivityCompat.checkSelfPermission(context, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                     // TODO: Consider calling
                     //    ActivityCompat#requestPermissions
                     // here to request the missing permissions, and then overriding
@@ -87,17 +94,36 @@ public class ScanActivity extends AppCompatActivity {
 
             @Override
             public void receiveDetections(Detector.Detections<Barcode> detections) {
-                final SparseArray<Barcode> barcodes = detections.getDetectedItems();
+                final SparseArray<Barcode> barcodeTest = detections.getDetectedItems();
+                final StringBuilder sb = new StringBuilder();
 
-                if (barcodes.size() != 0) {
-                    barcodeInfo.post(new Runnable() {    // Use the post method of the TextView
-                        public void run() {
-                            barcodeInfo.setText(    // Update the TextView
-                                    barcodes.valueAt(0).displayValue
-                            );
-                        }
-                    });
+                for (int i = 0; i < barcodeTest.size(); i++) {
+                    sb.append(barcodeTest.valueAt(0).displayValue.toString());
                 }
+
+
+
+                if (barcodeTest.size() != 0) {
+                    if (barcodeInfo != null) {
+                        barcodeInfo.post(new Runnable() {    // Use the post method of the TextView
+                            public void run() {
+                                barcodeInfo.setText(    // Update the TextView
+                                        //barcodeTest.valueAt(0).displayValue
+                                        sb.toString()
+
+                                );
+                            }
+                        });
+                    }
+                }
+
+                if (barcodeInfo != null) {
+                    barcodeInfo.setText(sb.toString());
+                }
+
+                Log.d("Scan from Camera",
+                        sb.toString()
+                );
             }
         });
 
@@ -145,54 +171,4 @@ public class ScanActivity extends AppCompatActivity {
         AppIndex.AppIndexApi.end(client, viewAction);
         client.disconnect();
     }
-//        TextView test = (TextView) findViewById(R.id.barcodeResult);
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_scan);
-//        Bitmap myQRCode = null;
-//        try {
-//            myQRCode = BitmapFactory.decodeStream(
-//                    getAssets().open("qr_code.jpg")
-//            );
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-//        BarcodeDetector barcodeDetector =
-//                new BarcodeDetector.Builder(this)
-//                        .setBarcodeFormats(Barcode.QR_CODE)
-//                        .build();
-//
-//        Frame myFrame = new Frame.Builder()
-//                .setBitmap(myQRCode)
-//                .build();
-//
-//        SparseArray<Barcode> barcodes = barcodeDetector.detect(myFrame);
-//
-//        StringBuilder sb = new StringBuilder();
-//        // Check if at least one barcode was detected
-//        if(barcodes.size() != 0) {
-//
-//
-//            for (int i = 0; i < barcodes.size(); i++) {
-//                sb.append(barcodes.valueAt(0).rawValue.toString());
-//            }
-//
-//            //System.out.print(sb.toString());
-//
-//            // Print the QR code's message
-//            Log.d("My QR Code's Data",
-//                    //barcodes.valueAt(0).displayValue
-//                    sb.toString()
-//            );
-//        }
-//
-//        if(test != null) {
-//            test.setText("mkpmj;iponj");
-//        } else {
-//            Log.d("This Sucks.",
-//                    //barcodes.valueAt(0).displayValue
-//                    sb.toString()
-//            );
-//        }
-//    }
 }
