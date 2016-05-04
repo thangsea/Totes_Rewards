@@ -106,29 +106,6 @@ public class MainActivity extends AppCompatActivity {
         client.disconnect();
     }
 
-//    private class MenuButtonListener implements View.OnClickListener {
-//
-//        /**
-//         * The activity class to start upon button press.
-//         */
-//        private Class myClass;
-//
-//        /**
-//         * Constructor for menu button listener.
-//         *
-//         * @param theClass the activity class to start on button press.
-//         */
-//        public MenuButtonListener(Class theClass) {
-//            myClass = theClass;
-//        }
-//
-//        @Override
-//        public void onClick(View v) {
-//            Intent intent = new Intent(MainActivity.this, myClass);
-//            startActivity(intent);
-//        }
-//    }
-
     public void openScan(View view) {
         Intent intent = new Intent(this, ScanActivity.class);
         startActivity(intent);
