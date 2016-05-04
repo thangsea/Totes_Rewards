@@ -3,16 +3,11 @@ package com.example.totes_rewards.totesrewards;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.support.annotation.RequiresPermission;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.SparseArray;
-import android.view.Display;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.widget.TextView;
@@ -22,7 +17,6 @@ import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
-import com.google.android.gms.vision.Frame;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
 
@@ -39,8 +33,6 @@ public class ScanActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-        //final TextView test = (TextView) findViewById(R.id.barcodeResult);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan);
 
@@ -96,14 +88,7 @@ public class ScanActivity extends AppCompatActivity {
             @Override
             public void receiveDetections(Detector.Detections<Barcode> detections) {
                 final SparseArray<Barcode> barcodeTest = detections.getDetectedItems();
-                final StringBuilder sb = new StringBuilder();
                 final TextView barcodeInfo = (TextView) findViewById(R.id.code_info);
-
-                for (int i = 0; i < barcodeTest.size(); i++) {
-                    sb.append(barcodeTest.valueAt(0).displayValue.toString());
-                }
-
-                String test = sb.toString();
 
                 if (barcodeTest.size() != 0) {
                     if (barcodeInfo != null) {
@@ -111,7 +96,6 @@ public class ScanActivity extends AppCompatActivity {
                             public void run() {
                                 barcodeInfo.setText(    // Update the TextView
                                         barcodeTest.valueAt(0).displayValue
-                                        //sb.toString()
 
                                 );
                             }
@@ -128,18 +112,6 @@ public class ScanActivity extends AppCompatActivity {
                         });
                     }
                 }
-
-//                if (barcodeInfo != null) {
-//                    barcodeInfo.post(new Runnable() {
-//                        public void run() {
-//                            barcodeInfo.setText(sb.toString());
-//                        }
-//                    });
-//                }
-//
-//                Log.d("Scan from Camera",
-//                        sb.toString()
-//                );
             }
         });
 
