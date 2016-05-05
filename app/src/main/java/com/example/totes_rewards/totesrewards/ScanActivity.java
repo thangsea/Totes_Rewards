@@ -2,6 +2,7 @@ package com.example.totes_rewards.totesrewards;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.support.v4.app.ActivityCompat;
@@ -10,6 +11,7 @@ import android.os.Bundle;
 import android.util.SparseArray;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.android.gms.appindexing.Action;
@@ -24,6 +26,12 @@ import java.io.IOException;
 
 public class ScanActivity extends AppCompatActivity {
 
+    //make a barcode detector
+    BarcodeDetector barcodeDetector = null;
+    CameraSource cameraSource = null;
+    EditText result;
+    Bundle bundle = new Bundle();
+
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -36,18 +44,17 @@ public class ScanActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan);
 
-        //make a barcode detector
-        BarcodeDetector barcodeDetector =
-                new BarcodeDetector.Builder(this)
-                        .setBarcodeFormats(Barcode.QR_CODE)
-                        .build();
+        barcodeDetector = new BarcodeDetector.Builder(this)
+                .setBarcodeFormats(Barcode.QR_CODE)
+                .build();
 
-        final SurfaceView cameraView = (SurfaceView) findViewById(R.id.camera_view);
-
-        final CameraSource cameraSource = new CameraSource.Builder(this, barcodeDetector)
+        cameraSource = new CameraSource.Builder(this, barcodeDetector)
                 .setRequestedPreviewSize(640, 480)
                 .build();
 
+        final Intent popupIntent = new Intent(this, PopupActivity.class);
+
+        final SurfaceView cameraView = (SurfaceView) findViewById(R.id.camera_view);
 
         cameraView.getHolder().addCallback(new SurfaceHolder.Callback() {
             @Override
@@ -76,11 +83,14 @@ public class ScanActivity extends AppCompatActivity {
 
             @Override
             public void surfaceDestroyed(SurfaceHolder holder) {
-                cameraSource.stop();
+                if (cameraSource != null) {
+                    cameraSource.stop();
+                }
             }
         });
 
         barcodeDetector.setProcessor(new Detector.Processor<Barcode>() {
+
             @Override
             public void release() {
             }
@@ -90,6 +100,9 @@ public class ScanActivity extends AppCompatActivity {
                 final SparseArray<Barcode> barcodeTest = detections.getDetectedItems();
                 final TextView barcodeInfo = (TextView) findViewById(R.id.code_info);
 
+                final StringBuilder sb = new StringBuilder();
+
+
                 if (barcodeTest.size() != 0) {
                     if (barcodeInfo != null) {
                         barcodeInfo.post(new Runnable() {    // Use the post method of the TextView
@@ -98,6 +111,15 @@ public class ScanActivity extends AppCompatActivity {
                                         barcodeTest.valueAt(0).displayValue
 
                                 );
+                                //Create a stringbuilder to hold the value of the QR code.
+                                for (int i = 0; i < barcodeTest.size(); i++) {
+                                    sb.append(barcodeTest.valueAt(i).displayValue);
+                                }
+                                //Place the SB in a bundle and call it result.
+                                bundle.putString("results", sb.toString());
+                                //place the bundle in the intent.
+                                popupIntent.putExtras(bundle);
+                                startActivity(popupIntent);
                             }
                         });
                     }
@@ -138,6 +160,19 @@ public class ScanActivity extends AppCompatActivity {
                 Uri.parse("android-app://com.example.totes_rewards.totesrewards/http/host/path")
         );
         AppIndex.AppIndexApi.start(client, viewAction);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();  // Always call the superclass method first
+
+        // Release the Camera because we don't need it when paused
+        // and other activities might need to use it.
+        //Stop the scanning.
+        if(cameraSource != null) {
+            cameraSource.stop();
+            cameraSource = null;
+        }
     }
 
     @Override

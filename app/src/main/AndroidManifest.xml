@@ -32,7 +32,8 @@
             android:value="barcode" />
 
         <activity android:name=".ScanActivity" />
-        <activity android:name=".RewardActivity"></activity>
+        <activity android:name=".RewardActivity" />
+        <activity android:name=".PopupActivity" />
     </application>
 
 </manifest>
