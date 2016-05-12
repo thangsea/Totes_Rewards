@@ -46,13 +46,14 @@ public class PopupActivity extends Activity implements OnClickListener {
     public void onClick(View v) {
 
             if (v.getId() == R.id.okButton) {
+                popupMessage.dismiss();
                 Intent scanIntent = new Intent(this, MainActivity.class);
                 startActivity(scanIntent);
             }
 
             else {
                 if (popupMessage != null) {
-                    popupMessage.dismiss();
+
                 }
             }
     }

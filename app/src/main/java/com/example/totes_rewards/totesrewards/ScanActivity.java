@@ -128,10 +128,7 @@ public class ScanActivity extends AppCompatActivity {
                                 bundle.putString("results", sb.toString());
                                 //place the bundle in the intent.
                                 popupIntent.putExtras(bundle);
-                                //startActivity(popupIntent);
-                                showPopup();
-
-
+                                startActivity(popupIntent);
                             }
                         });
                     }
@@ -205,29 +202,5 @@ public class ScanActivity extends AppCompatActivity {
         );
         AppIndex.AppIndexApi.end(client, viewAction);
         client.disconnect();
-    }
-
-
-    void showPopup() {
-
-        try {
-            // We need to get the instance of the LayoutInflater
-            LayoutInflater inflater = (LayoutInflater)
-                    getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View layout = inflater.inflate(R.layout.popup,
-                    (ViewGroup) findViewById(R.id.popup_1));
-            pw = new PopupWindow(layout, 300, 370, true);
-            pw.showAtLocation(layout, Gravity.CENTER, 0, 0);
-            close = (Button) layout.findViewById(R.id.close_popup);
-            close.setOnClickListener(cancel_button);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        cancel_button = new View.OnClickListener() {
-            public void onClick(View v) {
-                pw.dismiss();
-            }
-        };
     }
 }

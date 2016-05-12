@@ -8,28 +8,49 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".PopupActivity">
+    tools:context=".PopupActivity"
+    android:background="?attr/colorPrimary">
 
-    <Button
-        android:layout_width="130dp"
-        android:layout_height="160dp"
-        android:text="OK"
-        android:id="@+id/okButton"
-        android:layout_gravity="left|bottom" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="243dp"
+        android:layout_gravity="center_horizontal|top"
+        android:background="@drawable/border">
 
-    <Button
-        android:layout_width="130dp"
-        android:layout_height="160dp"
-        android:text="Cancel"
-        android:id="@+id/cancelButton"
-        android:layout_gravity="right|bottom" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="252dp"
+            android:text="New Text"
+            android:id="@+id/resultView"
+            android:layout_above="@+id/okButton"
+            android:layout_toEndOf="@+id/okButton"
+            android:gravity="center"/>
+    </LinearLayout>
 
-    <TextView
-        android:layout_width="349dp"
-        android:layout_height="315dp"
-        android:text="New Text"
-        android:id="@+id/resultView"
-        android:layout_above="@+id/okButton"
-        android:layout_toEndOf="@+id/okButton"
-        android:layout_gravity="center_horizontal|top" />
+    <FrameLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="158dp"
+        android:layout_gravity="center_horizontal|bottom"
+        android:weightSum="1">
+
+        <Button
+            android:layout_width="130dp"
+            android:layout_height="160dp"
+            android:text="Cancel"
+            android:id="@+id/cancelButton"
+            android:layout_weight="0.19"
+            android:layout_margin="10dp"
+            android:layout_gravity="right|center_vertical"
+            android:background="@drawable/border"/>
+
+        <Button
+            android:layout_width="130dp"
+            android:layout_height="160dp"
+            android:text="OK"
+            android:id="@+id/okButton"
+            android:layout_margin="10dp"
+            android:layout_gravity="left|center_vertical"
+            android:background="@drawable/border"/>
+    </FrameLayout>
 </FrameLayout>
