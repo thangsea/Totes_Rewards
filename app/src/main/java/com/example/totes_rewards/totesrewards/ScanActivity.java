@@ -9,9 +9,15 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.SparseArray;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.google.android.gms.appindexing.Action;
@@ -31,6 +37,9 @@ public class ScanActivity extends AppCompatActivity {
     CameraSource cameraSource = null;
     EditText result;
     Bundle bundle = new Bundle();
+    View.OnClickListener cancel_button;
+    PopupWindow pw = null;
+    Button close;
 
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -119,7 +128,10 @@ public class ScanActivity extends AppCompatActivity {
                                 bundle.putString("results", sb.toString());
                                 //place the bundle in the intent.
                                 popupIntent.putExtras(bundle);
-                                startActivity(popupIntent);
+                                //startActivity(popupIntent);
+                                showPopup();
+
+
                             }
                         });
                     }
@@ -193,5 +205,29 @@ public class ScanActivity extends AppCompatActivity {
         );
         AppIndex.AppIndexApi.end(client, viewAction);
         client.disconnect();
+    }
+
+
+    void showPopup() {
+
+        try {
+            // We need to get the instance of the LayoutInflater
+            LayoutInflater inflater = (LayoutInflater)
+                    getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View layout = inflater.inflate(R.layout.popup,
+                    (ViewGroup) findViewById(R.id.popup_1));
+            pw = new PopupWindow(layout, 300, 370, true);
+            pw.showAtLocation(layout, Gravity.CENTER, 0, 0);
+            close = (Button) layout.findViewById(R.id.close_popup);
+            close.setOnClickListener(cancel_button);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        cancel_button = new View.OnClickListener() {
+            public void onClick(View v) {
+                pw.dismiss();
+            }
+        };
     }
 }

@@ -1,6 +1,7 @@
 package com.example.totes_rewards.totesrewards;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -44,14 +45,15 @@ public class PopupActivity extends Activity implements OnClickListener {
     @Override
     public void onClick(View v) {
 
-        if (v.getId() == R.id.okButton) {
-            popupText.setText("It worked!!!!");
-            popupMessage.dismiss();
-        }
+            if (v.getId() == R.id.okButton) {
+                Intent scanIntent = new Intent(this, MainActivity.class);
+                startActivity(scanIntent);
+            }
 
-        else {
-            popupMessage.dismiss();
-        }
-
+            else {
+                if (popupMessage != null) {
+                    popupMessage.dismiss();
+                }
+            }
     }
 }
