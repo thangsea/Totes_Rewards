@@ -129,6 +129,8 @@ public class ScanActivity extends AppCompatActivity {
                                 //place the bundle in the intent.
                                 popupIntent.putExtras(bundle);
                                 startActivity(popupIntent);
+                                //((ScanActivity) Activity()).finish();
+                                android.os.Process.killProcess(android.os.Process.myPid());
                             }
                         });
                     }
