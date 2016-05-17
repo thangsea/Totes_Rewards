@@ -55,11 +55,9 @@ public class PopupActivity extends Activity implements OnClickListener {
             }
 
             else if (v.getId() == R.id.cancelButton) {
-                if (popupMessage != null) {
-                    if (scanIntent != null) {
-                        startActivity(scanIntent);
-                        android.os.Process.killProcess(android.os.Process.myPid());
-                    }
+                if (scanIntent != null) {
+                    startActivity(scanIntent);
+                    android.os.Process.killProcess(android.os.Process.myPid());
                 }
             }
     }
