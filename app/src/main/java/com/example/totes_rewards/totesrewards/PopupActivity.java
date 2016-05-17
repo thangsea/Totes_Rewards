@@ -32,8 +32,8 @@ public class PopupActivity extends Activity implements OnClickListener {
         popupText = (TextView) findViewById(R.id.resultView);
         cancelButton = (Button) findViewById(R.id.cancelButton);
         if (popupText != null) {
-            popupText.setText("The result of your scan is this: " + results
-                    + "\nIf this is correct, press OK, or cancel to try again.");
+            popupText.setText("The result of your scan is this: \n" + results
+                    + "\nIf this is correct press OK,\n or press cancel to try again.");
         }
     }
 
@@ -54,7 +54,7 @@ public class PopupActivity extends Activity implements OnClickListener {
                 }
             }
 
-            else {
+            else if (v.getId() == R.id.cancelButton) {
                 if (popupMessage != null) {
                     if (scanIntent != null) {
                         startActivity(scanIntent);
