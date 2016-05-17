@@ -27,17 +27,11 @@
             android:text="@string/scan"
             android:id="@+id/scanButton"
             android:textSize="30sp"
+            android:textAlignment="center"
             android:onClick="openScan"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_gravity="left|center_vertical"
             android:textColor="@color/colorPrimaryDark"/>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dip"
-            android:layout_marginLeft="4dip"
-            android:layout_marginRight="4dip"
-            android:background="?android:attr/dividerHorizontal"/>
 
         <Button
             android:layout_width="170dp"
@@ -45,10 +39,19 @@
             android:text="@string/Totes"
             android:id="@+id/rewardButton"
             android:textSize="30sp"
+            android:textAlignment="center"
             android:onClick="openReward"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_gravity="right|center_vertical"
             android:textColor="@color/colorPrimaryDark"/>
+
+        <View
+            android:layout_width="1dip"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="1dip"
+            android:layout_marginRight="1dip"
+            android:background="?android:attr/dividerHorizontal"
+            android:layout_gravity="center" />
 
         <View
             android:layout_width="match_parent"
@@ -56,6 +59,7 @@
             android:layout_marginLeft="4dip"
             android:layout_marginRight="4dip"
             android:background="?android:attr/dividerVertical"/>
+
     </FrameLayout>
 
     <FrameLayout
