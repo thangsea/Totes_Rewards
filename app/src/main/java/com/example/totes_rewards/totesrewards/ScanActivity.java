@@ -80,7 +80,9 @@ public class ScanActivity extends AppCompatActivity {
                     return;
                 }
                 try {
-                    cameraSource.start(cameraView.getHolder());
+                    if (cameraSource != null) {
+                        cameraSource.start(cameraView.getHolder());
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
