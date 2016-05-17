@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:paddingBottom="@dimen/activity_vertical_margin"
@@ -10,48 +11,75 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
 
     android:background="@color/colorPrimary"
-    android:weightSum="1">
+    android:weightSum="1"
+    tools:showIn="@layout/activity_main">
 
-    <ImageView
+    <FrameLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="366dp"
-        android:id="@+id/imageView"
-        android:background="@drawable/bag"
-        android:nestedScrollingEnabled="false"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_weight="1"
-        android:layout_gravity="center_horizontal|top"
-        android:contentDescription="Bag" />
+        android:layout_height="119dp"
+        android:layout_gravity="center_horizontal|bottom"
+        style="?android:attr/buttonBarStyle">
 
-    <Button
-        android:layout_width="170dp"
-        android:layout_height="160dp"
-        android:text="Scan"
-        android:id="@+id/scanButton"
-        android:layout_gravity="left|bottom"
-        android:textSize="30dp"
-        android:onClick="openScan"/>
+        <Button
+            android:layout_width="170dp"
+            android:layout_height="160dp"
+            android:text="@string/scan"
+            android:id="@+id/scanButton"
+            android:textSize="30sp"
+            android:onClick="openScan"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_gravity="left|center_vertical" />
 
-    <Button
-        android:layout_width="170dp"
-        android:layout_height="160dp"
-        android:text="@string/Totes"
-        android:id="@+id/rewardButton"
-        android:layout_gravity="right|bottom"
-        android:textSize="30dp"
-        android:onClick="openReward"/>
+        <Button
+            android:layout_width="170dp"
+            android:layout_height="160dp"
+            android:text="@string/Totes"
+            android:id="@+id/rewardButton"
+            android:textSize="30sp"
+            android:onClick="openReward"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_gravity="right|center_vertical" />
 
-    <TextView
-        android:layout_width="204dp"
-        android:layout_height="146dp"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Totes"
-        android:id="@+id/textView"
-        android:layout_gravity="center"
-        android:textSize="80dp" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dip"
+            android:layout_marginLeft="4dip"
+            android:layout_marginRight="4dip"
+            android:background="?android:attr/dividerVertical"/>
+    </FrameLayout>
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="311dp"
+        android:layout_gravity="center_horizontal|top">
 
+        <ImageView
+            android:layout_width="402dp"
+            android:layout_height="355dp"
+            android:id="@+id/imageView"
+            android:background="@drawable/bag"
+            android:layout_gravity="center_horizontal|top"
+            android:contentDescription="@string/bag"
+            android:gravity="center" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal|bottom">
+
+            <TextView
+                android:layout_width="263dp"
+                android:layout_height="118dp"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/totes"
+                android:id="@+id/textView"
+                android:gravity="center"
+                android:layout_gravity="center_horizontal|bottom"
+                android:textSize="80sp" />
+        </FrameLayout>
+
+    </FrameLayout>
 
 
 </FrameLayout>
