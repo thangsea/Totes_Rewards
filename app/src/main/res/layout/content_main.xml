@@ -51,7 +51,7 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="311dp"
+        android:layout_height="471dp"
         android:layout_gravity="center_horizontal|top">
 
         <ImageView
@@ -69,8 +69,8 @@
             android:layout_gravity="center_horizontal|bottom">
 
             <TextView
-                android:layout_width="263dp"
-                android:layout_height="118dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="@string/totes"
                 android:id="@+id/textView"

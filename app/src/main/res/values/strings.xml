@@ -6,4 +6,6 @@
     <string name="totes">Totes</string>
     <string name="scan">Scan</string>
     <string name="bag">Bag</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">OK</string>
 </resources>
