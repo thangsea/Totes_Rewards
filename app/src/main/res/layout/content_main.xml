@@ -32,6 +32,13 @@
             android:layout_gravity="left|center_vertical"
             android:textColor="@color/colorPrimaryDark"/>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dip"
+            android:layout_marginLeft="4dip"
+            android:layout_marginRight="4dip"
+            android:background="?android:attr/dividerHorizontal"/>
+
         <Button
             android:layout_width="170dp"
             android:layout_height="160dp"
