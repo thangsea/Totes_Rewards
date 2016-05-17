@@ -10,7 +10,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
 
-    android:background="@color/colorPrimary"
+    android:background="@color/colorPrimaryLight"
     android:weightSum="1"
     tools:showIn="@layout/activity_main">
 
@@ -29,7 +29,8 @@
             android:textSize="30sp"
             android:onClick="openScan"
             style="?android:attr/buttonBarButtonStyle"
-            android:layout_gravity="left|center_vertical" />
+            android:layout_gravity="left|center_vertical"
+            android:textColor="@color/colorPrimaryDark"/>
 
         <Button
             android:layout_width="170dp"
@@ -39,7 +40,8 @@
             android:textSize="30sp"
             android:onClick="openReward"
             style="?android:attr/buttonBarButtonStyle"
-            android:layout_gravity="right|center_vertical" />
+            android:layout_gravity="right|center_vertical"
+            android:textColor="@color/colorPrimaryDark"/>
 
         <View
             android:layout_width="match_parent"
@@ -75,6 +77,7 @@
                 android:text="@string/totes"
                 android:id="@+id/textView"
                 android:gravity="center"
+                android:textColor="@color/colorPrimaryDark"
                 android:layout_gravity="center_horizontal|bottom"
                 android:textSize="80sp" />
         </FrameLayout>
