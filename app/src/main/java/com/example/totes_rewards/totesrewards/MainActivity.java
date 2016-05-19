@@ -1,6 +1,5 @@
 package com.example.totes_rewards.totesrewards;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,7 +10,6 @@ import android.widget.ProgressBar;
 public class MainActivity extends AppCompatActivity {
 
     ProgressBar spinner;
-    View view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,5 +52,10 @@ public class MainActivity extends AppCompatActivity {
         final Intent menuIntent = new Intent(this, MenuActivity.class);
         startActivity(menuIntent);
     }
+
+//    public void StartLogin() {
+//        final Intent loginIntent = new Intent(this, LoginActivity.class);
+//        startActivity(loginIntent);
+//    }
 
 }
