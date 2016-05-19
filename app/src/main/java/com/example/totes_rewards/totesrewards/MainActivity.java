@@ -19,7 +19,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         spinner = (ProgressBar) findViewById(R.id.progressBar);
         open(findViewById(R.id.progressBar));
-        StartMenu();
     }
 
     public void open(View view) {
@@ -43,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                 }
-
+                StartMenu();
             }
         };
         t.start();
