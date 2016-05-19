@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void open(View view) {
         spinner.setIndeterminate(true);
-        final int totalProgressTime = 100;
+        final int totalProgressTime = 10;
 
         final Thread t = new Thread() {
 
@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
                 int jumpTime = 0;
                 while (jumpTime < totalProgressTime) {
                     try {
-                        sleep(200);
+                        sleep(10);
                         jumpTime += 5;
                     } catch (InterruptedException e) {
                         // TODO Auto-generated catch block
