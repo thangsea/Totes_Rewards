@@ -32,8 +32,8 @@ public class PopupActivity extends Activity implements OnClickListener {
         popupText = (TextView) findViewById(R.id.resultView);
         cancelButton = (Button) findViewById(R.id.cancelButton);
         if (popupText != null) {
-            popupText.setText("The result of your scan is this: \n" + results
-                    + "\nIf this is correct press OK,\n or press cancel to try again.");
+            popupText.setText(getString(R.string.result) + results
+                    + getString(R.string.confirm));
         }
     }
 
@@ -44,12 +44,12 @@ public class PopupActivity extends Activity implements OnClickListener {
 
     @Override
     public void onClick(View v) {
-        final Intent mainIntent = new Intent(this, MainActivity.class);
+        final Intent menuIntent = new Intent(this, MenuActivity.class);
         final Intent scanIntent = new Intent(this, ScanActivity.class);
 
             if (v.getId() == R.id.okButton) {
-                if (mainIntent != null) {
-                    startActivity(mainIntent);
+                if (menuIntent != null) {
+                    startActivity(menuIntent);
                     android.os.Process.killProcess(android.os.Process.myPid());
                 }
             }
