@@ -11,8 +11,7 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
 
     ProgressBar spinner;
-    SharedPreferences userDetails =
-            getApplicationContext().getSharedPreferences("userDetails", MODE_PRIVATE);
+    SharedPreferences userDetails;
     String email;
     String password;
 
@@ -23,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
         spinner = (ProgressBar) findViewById(R.id.progressBar);
         //CredentialsApi.request();
         open(findViewById(R.id.progressBar));
-//        userDetails = getApplicationContext().getSharedPreferences("userDetails", MODE_PRIVATE);
+       userDetails = getApplicationContext().getSharedPreferences("userDetails", MODE_PRIVATE);
 //        try {
 //
 //        } catch (Exception e) {
