@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
         spinner = (ProgressBar) findViewById(R.id.progressBar);
         //CredentialsApi.request();
         open(findViewById(R.id.progressBar));
-       userDetails = getApplicationContext().getSharedPreferences("userDetails", MODE_PRIVATE);
+        userDetails = getApplicationContext().getSharedPreferences("userDetails", MODE_PRIVATE);
 //        try {
 //
 //        } catch (Exception e) {
@@ -34,17 +34,17 @@ public class MainActivity extends AppCompatActivity {
         spinner.setIndeterminate(true);
         //final int totalProgressTime = 50;
 
-
-
-            email = userDetails.getString("username", "");
-            password = userDetails.getString("password", "");
         if (email != null) {
+            email = userDetails.getString("username", "");
+            //password = userDetails.getString("password", "");
             Toast.makeText(this, email + ", " + password, Toast.LENGTH_LONG).show();
+        } else {
+            StartLogin();
+            Toast.makeText(this, "Email is null", Toast.LENGTH_LONG).show();
         }
 
 
-//            StartLogin();
-//            Toast.makeText(this, "Email is null", Toast.LENGTH_LONG).show();
+//
 
 
 //        final Thread t = new Thread() {
