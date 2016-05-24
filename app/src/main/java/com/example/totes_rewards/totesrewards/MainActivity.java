@@ -15,11 +15,8 @@ import com.google.android.gms.auth.api.credentials.CredentialsApi;
 
 public class MainActivity extends AppCompatActivity {
 
-
     ProgressBar spinner;
     SharedPreferences userDetails;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
