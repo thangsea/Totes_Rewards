@@ -52,7 +52,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     private final static String STORETEXT="storetext.txt";
 
-    SharedPreferences myPrefs = this.getSharedPreferences("myPrefs", MODE_PRIVATE);
+    SharedPreferences myPrefs;
 
     Context screen = this.getBaseContext();
 
@@ -100,6 +100,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 return false;
             }
         });
+
+        myPrefs = this.getSharedPreferences("myPrefs", MODE_PRIVATE);
 
         Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
 
