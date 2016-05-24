@@ -17,8 +17,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     ProgressBar spinner;
-    Context screen = this.getBaseContext();
-    SharedPreferences userDetails = screen.getSharedPreferences("userdetails", MODE_PRIVATE);
+    SharedPreferences userDetails = this.getSharedPreferences("userdetails", MODE_PRIVATE);
 
 
     @Override
@@ -39,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
             String email = userDetails.getString("username", "");
             String password = userDetails.getString("password", "");
         } catch (Exception e) {
-            Toast.makeText(screen, "Login doesn't exist!", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Login doesn't exist!", Toast.LENGTH_LONG).show();
         }
 
 
