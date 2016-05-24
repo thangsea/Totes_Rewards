@@ -91,7 +91,7 @@ public class PopupActivity extends Activity implements OnClickListener {
         protected void onPreExecute() {
             super.onPreExecute();
             pDialog = new ProgressDialog(PopupActivity.this);
-            pDialog.setMessage("Creating Product..");
+            pDialog.setMessage("Adding/Updating Reward...");
             pDialog.setIndeterminate(false);
             pDialog.setCancelable(true);
             pDialog.show();
@@ -104,14 +104,14 @@ public class PopupActivity extends Activity implements OnClickListener {
             value = results.split(":");
             // url to create new product
             url_create_product =
-                    "http://api.androidhive.info/android_connect/create_product.php";
+                    "http://cssgate.insttech.washington.edu/~luiss3/create_storecode.php";
 
 
             // Building Parameters
             List<NameValuePair> params = new ArrayList<NameValuePair>();
 
-            params.add(new BasicNameValuePair("store", value[0]));
-            params.add(new BasicNameValuePair("points", value[1]));
+            params.add(new BasicNameValuePair("id", "123456"));
+            params.add(new BasicNameValuePair("value", value[1]));
 
             // getting JSON Object
             // Note that create product url accepts POST method
@@ -126,13 +126,9 @@ public class PopupActivity extends Activity implements OnClickListener {
                 int success = json.getInt(TAG_SUCCESS);
 
                 if (success == 1) {
-                    Toast.makeText(PopupActivity.this, "The Reward has been added!",
-                            Toast.LENGTH_LONG).show();
                     startActivity(menuIntent);
                     finish();
                 } else {
-                    Toast.makeText(PopupActivity.this, "The Reward was not added, try again.",
-                            Toast.LENGTH_LONG).show();
                     startActivity(scanIntent);
                     finish();
                 }
