@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
@@ -357,7 +358,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             prefsEditor.putString("email", mEmail.toString().trim());
             prefsEditor.putString("password", mPassword.toString().trim());
             prefsEditor.commit();
-            Toast.makeText(screen, "Login details are saved..", Toast.LENGTH_LONG).show();
+            StartMain();
+            //Toast.makeText(screen, "Login details are saved..", Toast.LENGTH_LONG).show();
             return true;
         }
 
@@ -379,6 +381,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mAuthTask = null;
             showProgress(false);
         }
+    }
+
+    public void StartMain() {
+        final Intent menuIntent = new Intent(this, MenuActivity.class);
+        startActivity(menuIntent);
     }
 }
 
