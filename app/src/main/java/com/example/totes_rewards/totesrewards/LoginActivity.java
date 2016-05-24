@@ -43,7 +43,8 @@ import static android.Manifest.permission.READ_CONTACTS;
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
 
 
-    SharedPreferences myPrefs;
+    SharedPreferences myPrefs =
+            getApplicationContext().getSharedPreferences("userDetails", MODE_PRIVATE);;
 
     /**
      * Id to identity READ_CONTACTS permission request.
@@ -83,8 +84,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 return false;
             }
         });
-
-        myPrefs = getApplicationContext().getSharedPreferences("userDetails", MODE_PRIVATE);
+//
+//        myPrefs = getApplicationContext().getSharedPreferences("userDetails", MODE_PRIVATE);
 
 //        try {
 //

@@ -11,7 +11,10 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
 
     ProgressBar spinner;
-    SharedPreferences userDetails;
+    SharedPreferences userDetails =
+            getApplicationContext().getSharedPreferences("userDetails", MODE_PRIVATE);
+    String email;
+    String password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         spinner = (ProgressBar) findViewById(R.id.progressBar);
         //CredentialsApi.request();
         open(findViewById(R.id.progressBar));
-        userDetails = getApplicationContext().getSharedPreferences("userDetails", MODE_PRIVATE);
+//        userDetails = getApplicationContext().getSharedPreferences("userDetails", MODE_PRIVATE);
 //        try {
 //
 //        } catch (Exception e) {
@@ -33,14 +36,16 @@ public class MainActivity extends AppCompatActivity {
         //final int totalProgressTime = 50;
 
 
-        try {
-            String email = userDetails.getString("username", "");
-            String password = userDetails.getString("password", "");
+
+            email = userDetails.getString("username", "");
+            password = userDetails.getString("password", "");
+        if (email != null) {
             Toast.makeText(this, email + ", " + password, Toast.LENGTH_LONG).show();
-        } catch (Exception e) {
-            StartLogin();
-            Toast.makeText(this, "Email is null", Toast.LENGTH_LONG).show();
         }
+
+
+//            StartLogin();
+//            Toast.makeText(this, "Email is null", Toast.LENGTH_LONG).show();
 
 
 //        final Thread t = new Thread() {
