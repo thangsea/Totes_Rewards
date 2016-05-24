@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
             String email = userDetails.getString("username", "");
             String password = userDetails.getString("password", "");
         } catch (Exception e) {
-            Toast.makeText(this, "Login doesn't exist!", Toast.LENGTH_LONG).show();
+            StartLogin();
         }
 
 
@@ -75,9 +75,9 @@ public class MainActivity extends AppCompatActivity {
         startActivity(menuIntent);
     }
 
-//    public void StartLogin() {
-//        final Intent loginIntent = new Intent(this, LoginActivity.class);
-//        startActivity(loginIntent);
-//    }
+    public void StartLogin() {
+        final Intent loginIntent = new Intent(this, LoginActivity.class);
+        startActivity(loginIntent);
+    }
 
 }
