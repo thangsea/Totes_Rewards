@@ -17,7 +17,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     ProgressBar spinner;
-    SharedPreferences userDetails = this.getSharedPreferences("userdetails", MODE_PRIVATE);
+    SharedPreferences userDetails;
+
 
 
     @Override
@@ -27,6 +28,11 @@ public class MainActivity extends AppCompatActivity {
         spinner = (ProgressBar) findViewById(R.id.progressBar);
         //CredentialsApi.request();
         open(findViewById(R.id.progressBar));
+        try {
+            userDetails = this.getSharedPreferences("userdetails", MODE_PRIVATE);
+        } catch (Exception e) {
+            Toast.makeText(this, "userdetails is null!", Toast.LENGTH_LONG).show();
+        }
     }
 
     public void open(View view) {
