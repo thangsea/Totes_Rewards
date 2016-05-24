@@ -1,21 +1,32 @@
 package com.example.totes_rewards.totesrewards;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.Toast;
+
+import com.google.android.gms.auth.api.credentials.Credential;
+import com.google.android.gms.auth.api.credentials.CredentialsApi;
 
 public class MainActivity extends AppCompatActivity {
 
+
     ProgressBar spinner;
+    Context screen = this.getBaseContext();
+    SharedPreferences userDetails = screen.getSharedPreferences("userdetails", MODE_PRIVATE);
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         spinner = (ProgressBar) findViewById(R.id.progressBar);
+        //CredentialsApi.request();
         open(findViewById(R.id.progressBar));
     }
 
@@ -23,27 +34,36 @@ public class MainActivity extends AppCompatActivity {
         spinner.setIndeterminate(true);
         final int totalProgressTime = 50;
 
-        final Thread t = new Thread() {
 
-            @Override
-            public void run() {
+        try {
+            String email = userDetails.getString("username", "");
+            String password = userDetails.getString("password", "");
+        } catch (Exception e) {
+            Toast.makeText(screen, "Login doesn't exist!", Toast.LENGTH_LONG).show();
+        }
 
-                int jumpTime = 0;
-                while (jumpTime < totalProgressTime) {
-                    try {
-                        sleep(1000);
-                        jumpTime += 5;
-                        Log.d("Message", "It's Working!");
-                    } catch (InterruptedException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    }
 
-                }
-                StartMenu();
-            }
-        };
-        t.start();
+//        final Thread t = new Thread() {
+//
+//            @Override
+//            public void run() {
+//
+//                int jumpTime = 0;
+//                while (jumpTime < totalProgressTime) {
+//                    try {
+//                        sleep(1000);
+//                        jumpTime += 5;
+//                        Log.d("Message", "It's Working!");
+//                    } catch (InterruptedException e) {
+//                        // TODO Auto-generated catch block
+//                        e.printStackTrace();
+//                    }
+//
+//                }
+//                StartMenu();
+//            }
+//        };
+//        t.start();
     }
 
 
