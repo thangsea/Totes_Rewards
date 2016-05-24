@@ -20,11 +20,12 @@ public class MainActivity extends AppCompatActivity {
         spinner = (ProgressBar) findViewById(R.id.progressBar);
         //CredentialsApi.request();
         open(findViewById(R.id.progressBar));
-        try {
-            userDetails = this.getSharedPreferences("userDetails", MODE_PRIVATE);
-        } catch (Exception e) {
-            Toast.makeText(this, "userdetails is null!", Toast.LENGTH_LONG).show();
-        }
+        userDetails = getApplicationContext().getSharedPreferences("userDetails", MODE_PRIVATE);
+//        try {
+//
+//        } catch (Exception e) {
+//            Toast.makeText(this, "userdetails is null!", Toast.LENGTH_LONG).show();
+//        }
     }
 
     public void open(View view) {

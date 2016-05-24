@@ -84,11 +84,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         });
 
-        try {
-            myPrefs = this.getSharedPreferences("userDetails", MODE_PRIVATE);
-        } catch (Exception e) {
-            Toast.makeText(this, "Shared Preferences failed!", Toast.LENGTH_LONG).show();
-        }
+        myPrefs = getApplicationContext().getSharedPreferences("userDetails", MODE_PRIVATE);
+
+//        try {
+//
+//        } catch (Exception e) {
+//            Toast.makeText(this, "Shared Preferences failed!", Toast.LENGTH_LONG).show();
+//        }
 
 
         Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
@@ -340,7 +342,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             prefsEditor.clear();
             prefsEditor.putString("email", mEmail.trim());
             prefsEditor.putString("password", mPassword.trim());
-            prefsEditor.apply();
+            prefsEditor.commit();
             StartMain();
             //Toast.makeText(screen, "Login details are saved..", Toast.LENGTH_LONG).show();
             return true;
