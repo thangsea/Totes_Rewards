@@ -40,10 +40,10 @@ public class MainActivity extends AppCompatActivity {
         try {
             String email = userDetails.getString("username", "");
             String password = userDetails.getString("password", "");
-            StartMenu();
             Toast.makeText(this, email.toString(), Toast.LENGTH_LONG).show();
         } catch (Exception e) {
-            StartLogin();
+            //StartLogin();
+            Toast.makeText(this, "Email is null", Toast.LENGTH_LONG).show();
         }
 
 
