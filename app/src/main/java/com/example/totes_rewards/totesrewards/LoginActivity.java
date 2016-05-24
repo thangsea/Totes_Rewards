@@ -341,9 +341,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         @Override
         protected Boolean doInBackground(Void... params) {
 
-
-
-
             PrefUtils.saveToPrefs(LoginActivity.this, "email", mEmail);
             PrefUtils.saveToPrefs(LoginActivity.this, "password", mPassword);
             StartMain();

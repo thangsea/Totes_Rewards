@@ -120,7 +120,9 @@ public class RewardActivity extends ListActivity {
             // Building Parameters
             List<NameValuePair> params = new ArrayList<NameValuePair>();
             // getting JSON string from URL
-            String url_all_products = "http://api.androidhive.info/android_connect/get_all_products.php";
+            String url_all_products =
+                    "http://api.androidhive.info/android_connect/get_all_products.php";
+
             JSONObject json = jParser.makeHttpRequest(url_all_products, "GET", params);
 
             // Check your log cat for JSON reponse
