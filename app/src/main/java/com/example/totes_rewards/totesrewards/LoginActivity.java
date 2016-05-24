@@ -101,7 +101,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         });
 
-        myPrefs = this.getSharedPreferences("myPrefs", MODE_PRIVATE);
+        try {
+            myPrefs = this.getSharedPreferences("myPrefs", MODE_PRIVATE);
+        } catch (Exception e) {
+            Toast.makeText(this, "Shared Preferences failed!", Toast.LENGTH_LONG).show();
+        }
+
 
         Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
 
