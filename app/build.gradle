@@ -3,6 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.3"
+    useLibrary "org.apache.http.legacy"
 
     defaultConfig {
         applicationId "com.example.totes_rewards.totesrewards"
@@ -27,4 +28,7 @@ dependencies {
     compile 'com.google.android.gms:play-services-appindexing:8.4.0'
     compile 'com.google.android.gms:play-services:8.4.0'
     compile 'com.google.android.gms:play-services-auth:8.4.0'
+    compile 'org.json:json:20141113'
+    compile group: 'org.apache.httpcomponents' , name: 'httpclient-android' , version: '4.3.5'
+
 }

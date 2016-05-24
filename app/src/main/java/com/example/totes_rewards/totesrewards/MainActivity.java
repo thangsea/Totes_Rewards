@@ -2,6 +2,7 @@ package com.example.totes_rewards.totesrewards;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -12,70 +13,40 @@ public class MainActivity extends AppCompatActivity {
 
     ProgressBar spinner;
     SharedPreferences userDetails;
-    String email;
-    String password;
+    String email = "blank";
+    String password = "blank";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         spinner = (ProgressBar) findViewById(R.id.progressBar);
-        //CredentialsApi.request();
         open(findViewById(R.id.progressBar));
-        userDetails = getApplicationContext().getSharedPreferences("userDetails", MODE_PRIVATE);
-//        try {
-//
-//        } catch (Exception e) {
-//            Toast.makeText(this, "userdetails is null!", Toast.LENGTH_LONG).show();
-//        }
     }
 
     public void open(View view) {
         spinner.setIndeterminate(true);
-        //final int totalProgressTime = 50;
 
-        if (email != null) {
-            email = userDetails.getString("username", "");
-            //password = userDetails.getString("password", "");
-            Toast.makeText(this, email + ", " + password, Toast.LENGTH_LONG).show();
-        } else {
-            StartLogin();
-            Toast.makeText(this, "Email is null", Toast.LENGTH_LONG).show();
+        try {
+            email = PrefUtils.getFromPrefs(MainActivity.this, "email", "null");
+            password = PrefUtils.getFromPrefs(MainActivity.this, "password", "null");
+        } catch (Exception e) {
+            Toast.makeText(this, "Account not found", Toast.LENGTH_LONG).show();
         }
 
-
-//
-
-
-//        final Thread t = new Thread() {
-//
-//            @Override
-//            public void run() {
-//
-//                int jumpTime = 0;
-//                while (jumpTime < totalProgressTime) {
-//                    try {
-//                        sleep(1000);
-//                        jumpTime += 5;
-//                        Log.d("Message", "It's Working!");
-//                    } catch (InterruptedException e) {
-//                        // TODO Auto-generated catch block
-//                        e.printStackTrace();
-//                    }
-//
-//                }
-//                StartMenu();
-//            }
-//        };
-//        t.start();
+        if (email .equals("null")) {
+            StartLogin();
+        } else {
+            Toast.makeText(this, "The account Name is: " + email +
+                    ", \nand the Password is: " + password, Toast.LENGTH_LONG).show();
+            StartMenu();
+        }
     }
 
-
-
-//    public void StartMenu() {
-//        final Intent menuIntent = new Intent(this, MenuActivity.class);
-//        startActivity(menuIntent);
-//    }
+    public void StartMenu() {
+        final Intent menuIntent = new Intent(this, MenuActivity.class);
+        startActivity(menuIntent);
+    }
 
     public void StartLogin() {
         final Intent loginIntent = new Intent(this, LoginActivity.class);

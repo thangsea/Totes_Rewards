@@ -1,5 +1,7 @@
 package com.example.totes_rewards.totesrewards;
 
+import org.json.*;
+
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
@@ -44,6 +46,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
 
     SharedPreferences myPrefs;
+    JSONParser jsonParser = new JSONParser();
 
     /**
      * Id to identity READ_CONTACTS permission request.
@@ -338,11 +341,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         @Override
         protected Boolean doInBackground(Void... params) {
 
-            SharedPreferences.Editor prefsEditor = myPrefs.edit();
-            prefsEditor.clear();
-            prefsEditor.putString("email", mEmail.trim());
-            prefsEditor.putString("password", mPassword.trim());
-            prefsEditor.commit();
+
+
+
+            PrefUtils.saveToPrefs(LoginActivity.this, "email", mEmail);
+            PrefUtils.saveToPrefs(LoginActivity.this, "password", mPassword);
             StartMain();
             //Toast.makeText(screen, "Login details are saved..", Toast.LENGTH_LONG).show();
             return true;
@@ -371,6 +374,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     public void StartMain() {
         final Intent mainIntent = new Intent(this, MainActivity.class);
         startActivity(mainIntent);
+    }
+
+    public void loginServer() {
+
+
     }
 }
 

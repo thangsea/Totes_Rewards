@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
@@ -55,6 +56,7 @@ public class MenuActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            StartLogin();
             return true;
         }
 
@@ -109,5 +111,10 @@ public class MenuActivity extends AppCompatActivity {
     public void openReward(View view) {
         Intent intent = new Intent(this, RewardActivity.class);
         startActivity(intent);
+    }
+
+    public void StartLogin() {
+        final Intent loginIntent = new Intent(this, LoginActivity.class);
+        startActivity(loginIntent);
     }
 }
