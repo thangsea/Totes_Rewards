@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,6 +35,8 @@ public class RewardActivity extends ListActivity {
     private ProgressDialog pDialog;
     private String store;
     private String value;
+    private String email = "blank";
+    private String password = "blank";
 
     // Creating JSON Parser object
     JSONParser jParser = new JSONParser();
@@ -49,7 +52,6 @@ public class RewardActivity extends ListActivity {
     // products JSONArray
     JSONArray rewards = null;
 
-    Map<String, String> test = new HashMap<>();
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -69,18 +71,6 @@ public class RewardActivity extends ListActivity {
 
         // Get listview
         ListView lv = getListView();
-
-        test.put("JC Penny", "500");
-//        test.put("Sears", "1000");
-//        test.put("Hot Topic", "420");
-//        test.put("Lids", "100");
-//        test.put("GameStop", "750");
-        try {
-            JSONObject penny = new JSONObject(test);
-            rewards.put(penny);
-        } catch (Exception e) {
-
-        }
 
         // on seleting single product
         // launching Edit Product Screen
@@ -191,9 +181,15 @@ public class RewardActivity extends ListActivity {
             List<NameValuePair> params = new ArrayList<>();
             // getting JSON string from URL
             String url_all_products =
-                    "http://cssgate.insttech.washington.edu/~luiss3/get_storecodes_of.php";
+                    "http://cssgate.insttech.washington.edu/~luiss3/pull.php";
 
-            JSONObject json = jParser.makeHttpRequest(url_all_products, "GET", params);
+            email = PrefUtils.getFromPrefs(RewardActivity.this, "email", "null");
+            password = PrefUtils.getFromPrefs(RewardActivity.this, "password", "null");
+
+            params.add(new BasicNameValuePair("email", email));
+            params.add(new BasicNameValuePair("password", password));
+
+            JSONObject json = jParser.makeHttpRequest(url_all_products, "POST", params);
 
             // Check your log cat for JSON reponse
             if (json != null) {
@@ -210,26 +206,31 @@ public class RewardActivity extends ListActivity {
                 if (success == 1) {
                     // products found
                     // Getting Array of Products
-                    //rewards = json.getJSONArray(TAG_REWARDS);
+                    try {
+                        assert json != null;
+                        rewards = json.getJSONArray(TAG_REWARDS);
+                    } catch (Exception e) {
+                        Log.d("ERROR!!!!", "Rewards was not created.");
+                    }
 
                     // looping through All Products
-                    for (int i = 0; i < rewards.length(); i++) {
-                        JSONObject c = rewards.getJSONObject(i);
+                        for (int i = 0; i < rewards.length(); i++) {
+                            JSONObject c = rewards.getJSONObject(i);
 
-                        // Storing each json item in variable
-                        store = c.getString(TAG_STORE);
-                        value = c.getString(TAG_VALUE);
+                            // Storing each json item in variable
+                            store = c.getString(TAG_STORE);
+                            value = c.getString(TAG_VALUE);
 
-                        // creating new HashMap
-                        Map<String, String> map = new HashMap<>();
+                            // creating new HashMap
+                            Map<String, String> map = new HashMap<>();
 
-                        // adding each child node to HashMap key => value
-                        map.put(TAG_STORE, store);
-                        map.put(TAG_VALUE, value);
+                            // adding each child node to HashMap key => value
+                            map.put(TAG_STORE, store);
+                            map.put(TAG_VALUE, value);
 
-                        // adding HashList to ArrayList
-                        productsList.add(map);
-                    }
+                            // adding HashList to ArrayList
+                            productsList.add(map);
+                        }
                 }
 //                else {
 //                    // no products found

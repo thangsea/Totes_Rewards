@@ -31,7 +31,6 @@ public class PopupActivity extends Activity implements OnClickListener {
     JSONParser jsonParser = new JSONParser();
     String url_create_code;
     String url_add_reward;
-    String code;
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_CODE = "code";
     final Intent menuIntent = new Intent(this, MenuActivity.class);
@@ -106,10 +105,6 @@ public class PopupActivity extends Activity implements OnClickListener {
 
             value = results.split(":");
 
-            // url to add new store to database.
-            url_create_code =
-                    "http://cssgate.insttech.washington.edu/~luiss3/create_storecode.php";
-
             // URL to update a store with the scanned reward.
             url_add_reward =
                     "http://cssgate.insttech.washington.edu/~luiss3/create_scan.php";
@@ -117,21 +112,18 @@ public class PopupActivity extends Activity implements OnClickListener {
             // Building Parameters
             List<NameValuePair> params = new ArrayList<NameValuePair>();
 
-            String id = PrefUtils.getFromPrefs(PopupActivity.this, "email", "null");
-            id.toLowerCase().hashCode();
+            String email = PrefUtils.getFromPrefs(PopupActivity.this, "email", "null");
+            String password = PrefUtils.getFromPrefs(PopupActivity.this, "password", "null");
 
             params.add(new BasicNameValuePair("storename", value[0]));
             params.add(new BasicNameValuePair("value", value[1]));
+            params.add(new BasicNameValuePair("email", email));
+            params.add(new BasicNameValuePair("password", password));
 
             // getting JSON Object
             // Note that create product url accepts POST method
-            JSONObject json = jsonParser.makeHttpRequest(url_create_code,
+            JSONObject json = jsonParser.makeHttpRequest(url_add_reward,
                     "POST", params);
-
-            code = json.optString(TAG_CODE).toString();
-
-            // check log cat fro response
-            Log.d("Create Response", code);
 
             // check for success tag
             try {
