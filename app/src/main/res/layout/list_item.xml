@@ -8,7 +8,7 @@
 
 <!-- Product id (pid) - will be HIDDEN - used to pass to other activity -->
 <TextView
-    android:id="@+id/pid"
+    android:id="@+id/store"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:visibility="gone"
@@ -16,7 +16,7 @@
 
 <!-- Name Label -->
 <TextView
-    android:id="@+id/name"
+    android:id="@+id/value"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:paddingTop="6dip"

@@ -71,12 +71,16 @@ public class RewardActivity extends ListActivity {
         ListView lv = getListView();
 
         test.put("JC Penny", "500");
-        test.put("Sears", "1000");
-        test.put("Hot Topic", "420");
-        test.put("Lids", "100");
-        test.put("GameStop", "750");
+//        test.put("Sears", "1000");
+//        test.put("Hot Topic", "420");
+//        test.put("Lids", "100");
+//        test.put("GameStop", "750");
+        try {
+            JSONObject penny = new JSONObject(test);
+            rewards.put(penny);
+        } catch (Exception e) {
 
-        JSONObject temp = new JSONObject(test);
+        }
 
         // on seleting single product
         // launching Edit Product Screen
@@ -86,7 +90,7 @@ public class RewardActivity extends ListActivity {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
                 // getting values from selected ListItem
-                String pid = ((TextView) view.findViewById(R.id.pid)).getText()
+                String store = ((TextView) view.findViewById(R.id.store)).getText()
                         .toString();
 
                 // Starting new intent
@@ -209,24 +213,23 @@ public class RewardActivity extends ListActivity {
                     //rewards = json.getJSONArray(TAG_REWARDS);
 
                     // looping through All Products
-//                    for (int i = 0; i < rewards.length(); i++) {
-//                        JSONObject c = rewards.getJSONObject(i);
-//
-//                        // Storing each json item in variable
-//                        store = c.getString(TAG_STORE);
-//                        value = c.getString(TAG_VALUE);
-//
-//                        // creating new HashMap
-//                        Map<String, String> map = new HashMap<>();
-//
-//                        // adding each child node to HashMap key => value
-//                        map.put(TAG_STORE, store);
-//                        map.put(TAG_VALUE, value);
-//
-//                        // adding HashList to ArrayList
-//                        productsList.add(map);
-//                    }
-                    productsList.add(test);
+                    for (int i = 0; i < rewards.length(); i++) {
+                        JSONObject c = rewards.getJSONObject(i);
+
+                        // Storing each json item in variable
+                        store = c.getString(TAG_STORE);
+                        value = c.getString(TAG_VALUE);
+
+                        // creating new HashMap
+                        Map<String, String> map = new HashMap<>();
+
+                        // adding each child node to HashMap key => value
+                        map.put(TAG_STORE, store);
+                        map.put(TAG_VALUE, value);
+
+                        // adding HashList to ArrayList
+                        productsList.add(map);
+                    }
                 }
 //                else {
 //                    // no products found
@@ -260,7 +263,7 @@ public class RewardActivity extends ListActivity {
                             RewardActivity.this, productsList,
                             R.layout.list_item, new String[]{TAG_STORE,
                             TAG_VALUE},
-                            new int[]{R.id.pid, R.id.name});
+                            new int[]{R.id.store, R.id.value});
                     // updating listview
                     setListAdapter(adapter);
                 }
