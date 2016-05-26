@@ -19,7 +19,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.util.Log;
-import android.widget.Toast;
 
 
 public class PopupActivity extends Activity implements OnClickListener {
@@ -101,6 +100,7 @@ public class PopupActivity extends Activity implements OnClickListener {
          * Creating product
          * */
         protected String doInBackground(String... args) {
+
             value = results.split(":");
             // url to create new product
             url_create_product =
@@ -110,8 +110,12 @@ public class PopupActivity extends Activity implements OnClickListener {
             // Building Parameters
             List<NameValuePair> params = new ArrayList<NameValuePair>();
 
-            params.add(new BasicNameValuePair("id", "123456"));
-            params.add(new BasicNameValuePair("value", value[1]));
+            String id = PrefUtils.getFromPrefs(PopupActivity.this, "email", "null");
+            id.toLowerCase().hashCode();
+
+            params.add(new BasicNameValuePair("userid", id));
+            //params.add(new BasicNameValuePair("storename", results));
+            params.add(new BasicNameValuePair("code", value[1]));
 
             // getting JSON Object
             // Note that create product url accepts POST method

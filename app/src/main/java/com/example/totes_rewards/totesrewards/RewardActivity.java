@@ -118,19 +118,24 @@ public class RewardActivity extends ListActivity {
          * */
         protected String doInBackground(String... args) {
             // Building Parameters
-            List<NameValuePair> params = new ArrayList<NameValuePair>();
+            List<NameValuePair> params = new ArrayList<>();
             // getting JSON string from URL
             String url_all_products =
-                    "http://api.androidhive.info/android_connect/get_all_products.php";
+                    "http://cssgate.insttech.washington.edu/~luiss3/get_storecodes_of.php";
 
             JSONObject json = jParser.makeHttpRequest(url_all_products, "GET", params);
 
             // Check your log cat for JSON reponse
-            Log.d("All Products: ", json.toString());
+            if (json != null) {
+                Log.d("All Products: ", json.toString());
+            }
 
             try {
+                int success = 0;
                 // Checking for SUCCESS TAG
-                int success = json.getInt(TAG_SUCCESS);
+                if (json != null) {
+                    success = json.getInt(TAG_SUCCESS);
+                }
 
                 if (success == 1) {
                     // products found
@@ -196,5 +201,11 @@ public class RewardActivity extends ListActivity {
 
         }
 
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();  // Always call the superclass method first
+        pDialog.dismiss();
     }
 }

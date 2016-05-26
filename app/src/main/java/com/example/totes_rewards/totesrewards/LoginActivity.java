@@ -1,5 +1,7 @@
 package com.example.totes_rewards.totesrewards;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.*;
 
 import android.animation.Animator;
@@ -23,6 +25,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -46,7 +49,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
 
     SharedPreferences myPrefs;
+    String url_create_user;
     JSONParser jsonParser = new JSONParser();
+    private static final String TAG_SUCCESS = "success";
 
     /**
      * Id to identity READ_CONTACTS permission request.
@@ -339,12 +344,42 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
 
         @Override
-        protected Boolean doInBackground(Void... params) {
+        protected Boolean doInBackground(Void... args) {
 
             PrefUtils.saveToPrefs(LoginActivity.this, "email", mEmail);
             PrefUtils.saveToPrefs(LoginActivity.this, "password", mPassword);
-            StartMain();
-            //Toast.makeText(screen, "Login details are saved..", Toast.LENGTH_LONG).show();
+
+            url_create_user =
+                    "http://cssgate.insttech.washington.edu/~luiss3/create_user.php";
+
+            // Building Parameters
+            List<NameValuePair> params = new ArrayList<>();
+
+            params.add(new BasicNameValuePair("name", mEmail));
+            params.add(new BasicNameValuePair("password", mPassword));
+
+
+            JSONObject json = jsonParser.makeHttpRequest(url_create_user,
+                    "POST", params);
+
+            // check for success tag
+            try {
+                int success = json.getInt(TAG_SUCCESS);
+
+                if (success == 1) {
+                    Toast.makeText(LoginActivity.this, "Account has been added",
+                            Toast.LENGTH_LONG).show();
+                    StartMenu();
+                    finish();
+                } else {
+                    Toast.makeText(LoginActivity.this, "Account Was Not Added, Please try Again",
+                            Toast.LENGTH_LONG).show();
+                    StartMenu();
+                    finish();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
             return true;
         }
 
@@ -368,9 +403,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
     }
 
-    public void StartMain() {
-        final Intent mainIntent = new Intent(this, MainActivity.class);
-        startActivity(mainIntent);
+    public void StartMenu() {
+        final Intent menuIntent = new Intent(this, MenuActivity.class);
+        startActivity(menuIntent);
     }
 
     public void loginServer() {

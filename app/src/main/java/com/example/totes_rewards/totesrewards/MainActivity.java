@@ -25,10 +25,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void open(View view) {
-        spinner.setIndeterminate(true);
+        spinner.setIndeterminate(true);email = PrefUtils.getFromPrefs(MainActivity.this, "email", "null");
 
         try {
-            email = PrefUtils.getFromPrefs(MainActivity.this, "email", "null");
+
             password = PrefUtils.getFromPrefs(MainActivity.this, "password", "null");
         } catch (Exception e) {
             Toast.makeText(this, "Account not found", Toast.LENGTH_LONG).show();
