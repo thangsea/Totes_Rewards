@@ -3,6 +3,7 @@ package com.example.totes_rewards.totesrewards;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.http.NameValuePair;
 import org.json.JSONArray;
@@ -12,6 +13,7 @@ import org.json.JSONObject;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,24 +24,37 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.common.api.GoogleApiClient;
+
 public class RewardActivity extends ListActivity {
 
     // Progress Dialog
     private ProgressDialog pDialog;
+    private String store;
+    private String value;
 
     // Creating JSON Parser object
     JSONParser jParser = new JSONParser();
 
-    ArrayList<HashMap<String, String>> productsList;
+    ArrayList<Map<String, String>> productsList;
 
     // JSON Node names
     private static final String TAG_SUCCESS = "success";
-    private static final String TAG_PRODUCTS = "products";
-    private static final String TAG_PID = "pid";
-    private static final String TAG_NAME = "name";
+    private static final String TAG_REWARDS = "rewards";
+    private static final String TAG_STORE = "store";
+    private static final String TAG_VALUE = "value";
 
     // products JSONArray
-    JSONArray products = null;
+    JSONArray rewards = null;
+
+    Map<String, String> test = new HashMap<>();
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -54,6 +69,14 @@ public class RewardActivity extends ListActivity {
 
         // Get listview
         ListView lv = getListView();
+
+        test.put("JC Penny", "500");
+        test.put("Sears", "1000");
+        test.put("Hot Topic", "420");
+        test.put("Lids", "100");
+        test.put("GameStop", "750");
+
+        JSONObject temp = new JSONObject(test);
 
         // on seleting single product
         // launching Edit Product Screen
@@ -70,13 +93,16 @@ public class RewardActivity extends ListActivity {
                 Intent in = new Intent(getApplicationContext(),
                         EditRewardActivity.class);
                 // sending pid to next activity
-                in.putExtra(TAG_PID, pid);
+                in.putExtra(TAG_STORE, store);
 
                 // starting new activity and expecting some response back
                 startActivityForResult(in, 100);
             }
         });
 
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
     // Response from Edit Product Activity
@@ -95,14 +121,54 @@ public class RewardActivity extends ListActivity {
 
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client.connect();
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "Reward Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("http://host/path"),
+                // TODO: Make sure this auto-generated app URL is correct.
+                Uri.parse("android-app://com.example.totes_rewards.totesrewards/http/host/path")
+        );
+        AppIndex.AppIndexApi.start(client, viewAction);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "Reward Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("http://host/path"),
+                // TODO: Make sure this auto-generated app URL is correct.
+                Uri.parse("android-app://com.example.totes_rewards.totesrewards/http/host/path")
+        );
+        AppIndex.AppIndexApi.end(client, viewAction);
+        client.disconnect();
+    }
+
     /**
      * Background Async Task to Load all product by making HTTP Request
-     * */
+     */
     class LoadAllProducts extends AsyncTask<String, String, String> {
 
         /**
          * Before starting background thread Show Progress Dialog
-         * */
+         */
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -115,7 +181,7 @@ public class RewardActivity extends ListActivity {
 
         /**
          * getting All products from url
-         * */
+         */
         protected String doInBackground(String... args) {
             // Building Parameters
             List<NameValuePair> params = new ArrayList<>();
@@ -131,7 +197,7 @@ public class RewardActivity extends ListActivity {
             }
 
             try {
-                int success = 0;
+                int success = 1;
                 // Checking for SUCCESS TAG
                 if (json != null) {
                     success = json.getInt(TAG_SUCCESS);
@@ -140,26 +206,27 @@ public class RewardActivity extends ListActivity {
                 if (success == 1) {
                     // products found
                     // Getting Array of Products
-                    products = json.getJSONArray(TAG_PRODUCTS);
+                    //rewards = json.getJSONArray(TAG_REWARDS);
 
                     // looping through All Products
-                    for (int i = 0; i < products.length(); i++) {
-                        JSONObject c = products.getJSONObject(i);
-
-                        // Storing each json item in variable
-                        String id = c.getString(TAG_PID);
-                        String name = c.getString(TAG_NAME);
-
-                        // creating new HashMap
-                        HashMap<String, String> map = new HashMap<>();
-
-                        // adding each child node to HashMap key => value
-                        map.put(TAG_PID, id);
-                        map.put(TAG_NAME, name);
-
-                        // adding HashList to ArrayList
-                        productsList.add(map);
-                    }
+//                    for (int i = 0; i < rewards.length(); i++) {
+//                        JSONObject c = rewards.getJSONObject(i);
+//
+//                        // Storing each json item in variable
+//                        store = c.getString(TAG_STORE);
+//                        value = c.getString(TAG_VALUE);
+//
+//                        // creating new HashMap
+//                        Map<String, String> map = new HashMap<>();
+//
+//                        // adding each child node to HashMap key => value
+//                        map.put(TAG_STORE, store);
+//                        map.put(TAG_VALUE, value);
+//
+//                        // adding HashList to ArrayList
+//                        productsList.add(map);
+//                    }
+                    productsList.add(test);
                 }
 //                else {
 //                    // no products found
@@ -179,7 +246,7 @@ public class RewardActivity extends ListActivity {
 
         /**
          * After completing background task Dismiss the progress dialog
-         * **/
+         **/
         protected void onPostExecute(String file_url) {
             // dismiss the dialog after getting all products
             pDialog.dismiss();
@@ -191,16 +258,14 @@ public class RewardActivity extends ListActivity {
                      * */
                     ListAdapter adapter = new SimpleAdapter(
                             RewardActivity.this, productsList,
-                            R.layout.list_item, new String[] { TAG_PID,
-                            TAG_NAME},
-                            new int[] { R.id.pid, R.id.name });
+                            R.layout.list_item, new String[]{TAG_STORE,
+                            TAG_VALUE},
+                            new int[]{R.id.pid, R.id.name});
                     // updating listview
                     setListAdapter(adapter);
                 }
             });
-
         }
-
     }
 
     @Override
