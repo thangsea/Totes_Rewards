@@ -367,13 +367,15 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 int success = json.getInt(TAG_SUCCESS);
 
                 if (success == 1) {
-                    Toast.makeText(LoginActivity.this, "Account has been added",
-                            Toast.LENGTH_LONG).show();
+                   // Toast.makeText(LoginActivity.this, "Account has been added",
+                    //        Toast.LENGTH_LONG).show();
+                    Log.d("Success", Integer.toString(success));
                     StartMenu();
                     finish();
                 } else {
-                    Toast.makeText(LoginActivity.this, "Account Was Not Added, Please try Again",
-                            Toast.LENGTH_LONG).show();
+                    Log.d("Failed", Integer.toString(success));
+                    //Toast.makeText(LoginActivity.this, "Account Was Not Added, Please try Again",
+                            //Toast.LENGTH_LONG).show();
                     StartMenu();
                     finish();
                 }
@@ -406,11 +408,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     public void StartMenu() {
         final Intent menuIntent = new Intent(this, MenuActivity.class);
         startActivity(menuIntent);
-    }
-
-    public void loginServer() {
-
-
     }
 }
 

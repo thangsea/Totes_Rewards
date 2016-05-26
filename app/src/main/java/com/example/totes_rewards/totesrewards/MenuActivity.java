@@ -106,15 +106,18 @@ public class MenuActivity extends AppCompatActivity {
     public void openScan(View view) {
         Intent intent = new Intent(this, ScanActivity.class);
         startActivity(intent);
+        finish();
     }
 
     public void openReward(View view) {
         Intent intent = new Intent(this, RewardActivity.class);
         startActivity(intent);
+        finish();
     }
 
     public void StartLogin() {
         final Intent loginIntent = new Intent(this, LoginActivity.class);
         startActivity(loginIntent);
+        finish();
     }
 }

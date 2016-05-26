@@ -32,7 +32,6 @@ public class PopupActivity extends Activity implements OnClickListener {
     String url_create_product;
     private static final String TAG_SUCCESS = "success";
     final Intent menuIntent = new Intent(this, MenuActivity.class);
-    final Intent scanIntent = new Intent(this, ScanActivity.class);
 
 
     @Override
@@ -71,6 +70,7 @@ public class PopupActivity extends Activity implements OnClickListener {
             }
 
             else if (v.getId() == R.id.cancelButton) {
+                final Intent scanIntent = new Intent(this, ScanActivity.class);
                 if (scanIntent != null) {
                     startActivity(scanIntent);
                     finish();
@@ -89,11 +89,11 @@ public class PopupActivity extends Activity implements OnClickListener {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            pDialog = new ProgressDialog(PopupActivity.this);
-            pDialog.setMessage("Adding/Updating Reward...");
-            pDialog.setIndeterminate(false);
-            pDialog.setCancelable(true);
-            pDialog.show();
+//            pDialog = new ProgressDialog(PopupActivity.this);
+//            pDialog.setMessage("Adding/Updating Reward...");
+//            pDialog.setIndeterminate(false);
+//            pDialog.setCancelable(true);
+//            pDialog.show();
         }
 
         /**
@@ -105,7 +105,6 @@ public class PopupActivity extends Activity implements OnClickListener {
             // url to create new product
             url_create_product =
                     "http://cssgate.insttech.washington.edu/~luiss3/create_storecode.php";
-
 
             // Building Parameters
             List<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -131,9 +130,12 @@ public class PopupActivity extends Activity implements OnClickListener {
 
                 if (success == 1) {
                     startActivity(menuIntent);
+                    //pDialog.dismiss();
                     finish();
                 } else {
+                    final Intent scanIntent = new Intent(PopupActivity.this, ScanActivity.class);
                     startActivity(scanIntent);
+                    //pDialog.dismiss();
                     finish();
                 }
             } catch (JSONException e) {
@@ -148,7 +150,7 @@ public class PopupActivity extends Activity implements OnClickListener {
          * **/
         protected void onPostExecute(String file_url) {
             // dismiss the dialog once done
-            pDialog.dismiss();
+            //pDialog.dismiss();
         }
 
     }
