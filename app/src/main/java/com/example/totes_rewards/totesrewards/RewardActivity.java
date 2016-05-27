@@ -1,6 +1,5 @@
 package com.example.totes_rewards.totesrewards;
 
-import java.security.spec.ECField;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -199,13 +198,14 @@ public class RewardActivity extends ListActivity {
 
             try {
                 // Checking for SUCCESS TAG
+
+                assert json != null;
                 int success = json.getInt(TAG_SUCCESS);
 
                 if (success == 1) {
                     // products found
                     // Getting Array of Products
                     try {
-                        assert json != null;
                         rewards = json.getJSONArray(TAG_REWARDS);
                     } catch (Exception e) {
                         Log.e("****** ERROR!!!! ******", "Rewards was not created.");
@@ -222,8 +222,10 @@ public class RewardActivity extends ListActivity {
                                 Log.e("****** ERROR!!!! ******", "JSON object wasn't created.");
                             }
 
+                            assert c != null;
                             // Storing each json item in variable
                             try {
+
                                 store = c.getString(TAG_STORE);
                             } catch (Exception e) {
                                 Log.e("****** ERROR!!!! ******", "store was not created.");
@@ -244,9 +246,10 @@ public class RewardActivity extends ListActivity {
                                 Log.e("****** ERROR!!!! ******", "map was not created.");
                             }
 
-
+                            assert map != null;
                             // adding each child node to HashMap key => value
                             try {
+
                                 map.put(TAG_STORE, store);
                             } catch (Exception e) {
                                 Log.e("****** ERROR!!!! ******", "store was not added to map.");

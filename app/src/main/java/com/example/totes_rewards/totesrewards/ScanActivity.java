@@ -1,6 +1,7 @@
 package com.example.totes_rewards.totesrewards;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -35,11 +36,7 @@ public class ScanActivity extends AppCompatActivity {
     //make a barcode detector
     BarcodeDetector barcodeDetector = null;
     CameraSource cameraSource = null;
-    EditText result;
     Bundle bundle = new Bundle();
-    View.OnClickListener cancel_button;
-    PopupWindow pw = null;
-    Button close;
 
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -65,6 +62,7 @@ public class ScanActivity extends AppCompatActivity {
 
         final SurfaceView cameraView = (SurfaceView) findViewById(R.id.camera_view);
 
+        assert cameraView != null;
         cameraView.getHolder().addCallback(new SurfaceHolder.Callback() {
             @Override
             public void surfaceCreated(SurfaceHolder holder) {
@@ -139,6 +137,7 @@ public class ScanActivity extends AppCompatActivity {
                 } else {
                     if (barcodeInfo != null) {
                         barcodeInfo.post(new Runnable() {    // Use the post method of the TextView
+                            @SuppressLint("SetTextI18n")
                             public void run() {
                                 barcodeInfo.setText(    // Update the TextView
                                         "Nothing to Display"

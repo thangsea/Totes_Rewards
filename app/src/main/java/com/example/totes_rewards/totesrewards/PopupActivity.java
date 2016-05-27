@@ -33,7 +33,6 @@ public class PopupActivity extends Activity implements OnClickListener {
     private static final String TAG_USER_NAME = "username";
     private static final String TAG_STORE = "store";
     private static final String TAG_POINTS = "points";
-    private static final String TAG_CODE = "code";
     final Intent menuIntent = new Intent(PopupActivity.this, MenuActivity.class);
 
 
@@ -129,9 +128,7 @@ public class PopupActivity extends Activity implements OnClickListener {
             try {
                 int success = json.getInt(TAG_SUCCESS);
 
-                if (json != null) {
-                    Log.d("**** All Products ****", json.toString());
-                }
+                Log.d("**** All Products ****", json.toString());
 
                 if (success == 1) {
                     startActivity(new Intent(PopupActivity.this, MenuActivity.class));
