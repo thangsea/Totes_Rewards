@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -106,45 +107,30 @@ public class ScanActivity extends AppCompatActivity {
 
             @Override
             public void receiveDetections(Detector.Detections<Barcode> detections) {
-                final SparseArray<Barcode> barcodeTest = detections.getDetectedItems();
-                final TextView barcodeInfo = (TextView) findViewById(R.id.code_info);
 
+                //Create an array of barcode objects to hold the capture info.
+                final SparseArray<Barcode> barcodeTest = detections.getDetectedItems();
+
+                //Create a stringbuilder to store the barcodes as a string.
                 final StringBuilder sb = new StringBuilder();
 
-
+                //Once data is captured, bundle it as a string and open popup.
                 if (barcodeTest.size() != 0) {
-                    if (barcodeInfo != null) {
-                        barcodeInfo.post(new Runnable() {    // Use the post method of the TextView
-                            public void run() {
-                                barcodeInfo.setText(    // Update the TextView
-                                        barcodeTest.valueAt(0).displayValue
+                    //Use sb to capture all info from the scan as a string.
+                    for (int i = 0; i < barcodeTest.size(); i++) {
+                        sb.append(barcodeTest.valueAt(i).displayValue);
+                    }
 
-                                );
-                                //Create a stringbuilder to hold the value of the QR code.
-                                for (int i = 0; i < barcodeTest.size(); i++) {
-                                    sb.append(barcodeTest.valueAt(i).displayValue);
-                                }
-                                //Place the SB in a bundle and call it result.
-                                bundle.putString("results", sb.toString());
-                                //place the bundle in the intent.
-                                popupIntent.putExtras(bundle);
-                                startActivity(popupIntent);
-                                //((ScanActivity) Activity()).finish();
-                                android.os.Process.killProcess(android.os.Process.myPid());
-                            }
-                        });
-                    }
+                    //place the sb as a string in the bundle.
+                    bundle.putString("results", sb.toString());
+
+                    //place the bundle in the intent.
+                    popupIntent.putExtras(bundle);
+                    startActivity(popupIntent);
+                    finish();
+
                 } else {
-                    if (barcodeInfo != null) {
-                        barcodeInfo.post(new Runnable() {    // Use the post method of the TextView
-                            @SuppressLint("SetTextI18n")
-                            public void run() {
-                                barcodeInfo.setText(    // Update the TextView
-                                        "Nothing to Display"
-                                );
-                            }
-                        });
-                    }
+                    //Do nothing, as it will return true constantly until scan is successful.
                 }
             }
         });
