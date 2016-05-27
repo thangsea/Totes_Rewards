@@ -12,9 +12,10 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
 
     ProgressBar spinner;
-    SharedPreferences userDetails;
     String email = "blank";
     String password = "blank";
+    private static final String TAG_USER_NAME = "username";
+    private static final String TAG_PW = "password";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,11 +26,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void open(View view) {
-        spinner.setIndeterminate(true);email = PrefUtils.getFromPrefs(MainActivity.this, "email", "null");
+        spinner.setIndeterminate(true);
 
         try {
-
-            password = PrefUtils.getFromPrefs(MainActivity.this, "password", "null");
+            password = PrefUtils.getFromPrefs(MainActivity.this, TAG_PW, "null");
+            email = PrefUtils.getFromPrefs(MainActivity.this, TAG_USER_NAME, "null");
         } catch (Exception e) {
             Toast.makeText(this, "Account not found", Toast.LENGTH_LONG).show();
         }

@@ -51,13 +51,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     String url_create_user;
     JSONParser jsonParser = new JSONParser();
     private static final String TAG_SUCCESS = "success";
+    private static final String TAG_USER_NAME = "username";
+    private static final String TAG_PW = "password";
 
     /**
      * Id to identity READ_CONTACTS permission request.
      */
     private static final int REQUEST_READ_CONTACTS = 0;
-
-
 
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
@@ -316,7 +316,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mEmailView.setAdapter(adapter);
     }
 
-
     private interface ProfileQuery {
         String[] PROJECTION = {
                 ContactsContract.CommonDataKinds.Email.ADDRESS,
@@ -345,8 +344,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         @Override
         protected Boolean doInBackground(Void... args) {
 
-            PrefUtils.saveToPrefs(LoginActivity.this, "email", mEmail);
-            PrefUtils.saveToPrefs(LoginActivity.this, "password", mPassword);
+            PrefUtils.saveToPrefs(LoginActivity.this, TAG_USER_NAME, mEmail);
+            PrefUtils.saveToPrefs(LoginActivity.this, TAG_PW, mPassword);
 
             url_create_user =
                     "http://cssgate.insttech.washington.edu/~luiss3/create_user.php";
@@ -354,8 +353,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // Building Parameters
             List<NameValuePair> params = new ArrayList<>();
 
-            params.add(new BasicNameValuePair("name", mEmail));
-            params.add(new BasicNameValuePair("password", mPassword));
+            params.add(new BasicNameValuePair(TAG_USER_NAME, mEmail));
+            params.add(new BasicNameValuePair(TAG_PW, mPassword));
 
 
             JSONObject json = jsonParser.makeHttpRequest(url_create_user,

@@ -35,8 +35,6 @@ public class RewardActivity extends ListActivity {
     private ProgressDialog pDialog;
     private String store;
     private String value;
-    private String email = "blank";
-    private String password = "blank";
 
     // Creating JSON Parser object
     JSONParser jParser = new JSONParser();
@@ -48,6 +46,7 @@ public class RewardActivity extends ListActivity {
     private static final String TAG_REWARDS = "rewards";
     private static final String TAG_STORE = "store";
     private static final String TAG_VALUE = "value";
+    private static final String TAG_USER_NAME = "username";
 
     // products JSONArray
     JSONArray rewards = null;
@@ -177,19 +176,20 @@ public class RewardActivity extends ListActivity {
          * getting All products from url
          */
         protected String doInBackground(String... args) {
+
             // Building Parameters
-            List<NameValuePair> params = new ArrayList<>();
+            final List<NameValuePair> params = new ArrayList<>();
+
             // getting JSON string from URL
-            String url_all_products =
+            final String url_all_rewards =
                     "http://cssgate.insttech.washington.edu/~luiss3/pull.php";
 
-            email = PrefUtils.getFromPrefs(RewardActivity.this, "email", "null");
-            password = PrefUtils.getFromPrefs(RewardActivity.this, "password", "null");
+            //Add the username as a param to params.
+            params.add(new BasicNameValuePair(TAG_USER_NAME,
+                    PrefUtils.getFromPrefs(RewardActivity.this, TAG_USER_NAME, "null")));
 
-            params.add(new BasicNameValuePair("email", email));
-            params.add(new BasicNameValuePair("password", password));
-
-            JSONObject json = jParser.makeHttpRequest(url_all_products, "POST", params);
+            //Create the json object using the post request.
+            final JSONObject json = jParser.makeHttpRequest(url_all_rewards, "POST", params);
 
             // Check your log cat for JSON reponse
             if (json != null) {
