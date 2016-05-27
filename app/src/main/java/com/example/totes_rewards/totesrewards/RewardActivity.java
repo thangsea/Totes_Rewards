@@ -1,5 +1,6 @@
 package com.example.totes_rewards.totesrewards;
 
+import java.security.spec.ECField;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -34,7 +35,7 @@ public class RewardActivity extends ListActivity {
     // Progress Dialog
     private ProgressDialog pDialog;
     private String store;
-    private String value;
+    private String points;
 
     // Creating JSON Parser object
     JSONParser jParser = new JSONParser();
@@ -45,7 +46,7 @@ public class RewardActivity extends ListActivity {
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_REWARDS = "rewards";
     private static final String TAG_STORE = "store";
-    private static final String TAG_VALUE = "value";
+    private static final String TAG_POINTS = "points";
     private static final String TAG_USER_NAME = "username";
 
     // products JSONArray
@@ -193,15 +194,12 @@ public class RewardActivity extends ListActivity {
 
             // Check your log cat for JSON reponse
             if (json != null) {
-                Log.d("All Products: ", json.toString());
+                Log.e("**** All Products ****", json.toString());
             }
 
             try {
-                int success = 1;
                 // Checking for SUCCESS TAG
-                if (json != null) {
-                    success = json.getInt(TAG_SUCCESS);
-                }
+                int success = json.getInt(TAG_SUCCESS);
 
                 if (success == 1) {
                     // products found
@@ -210,29 +208,67 @@ public class RewardActivity extends ListActivity {
                         assert json != null;
                         rewards = json.getJSONArray(TAG_REWARDS);
                     } catch (Exception e) {
-                        Log.d("ERROR!!!!", "Rewards was not created.");
+                        Log.e("****** ERROR!!!! ******", "Rewards was not created.");
                     }
 
                     // looping through All Products
                         for (int i = 0; i < rewards.length(); i++) {
-                            JSONObject c = rewards.getJSONObject(i);
+                            JSONObject c = null;
+                            Map<String, String> map = null;
+
+                            try {
+                                c = rewards.getJSONObject(i);
+                            } catch (Exception e) {
+                                Log.e("****** ERROR!!!! ******", "JSON object wasn't created.");
+                            }
 
                             // Storing each json item in variable
-                            store = c.getString(TAG_STORE);
-                            value = c.getString(TAG_VALUE);
+                            try {
+                                store = c.getString(TAG_STORE);
+                            } catch (Exception e) {
+                                Log.e("****** ERROR!!!! ******", "store was not created.");
+                            }
+
+                            // Storing each json item in variable
+                            try {
+                                points = c.getString(TAG_POINTS);
+                            } catch (Exception e) {
+                                Log.e("****** ERROR!!!! ******", "points was not created.");
+                            }
+
 
                             // creating new HashMap
-                            Map<String, String> map = new HashMap<>();
+                            try {
+                                map = new HashMap<>();
+                            } catch (Exception e) {
+                                Log.e("****** ERROR!!!! ******", "map was not created.");
+                            }
+
 
                             // adding each child node to HashMap key => value
-                            map.put(TAG_STORE, store);
-                            map.put(TAG_VALUE, value);
+                            try {
+                                map.put(TAG_STORE, store);
+                            } catch (Exception e) {
+                                Log.e("****** ERROR!!!! ******", "store was not added to map.");
+                            }
+
+                            try {
+                                map.put(TAG_POINTS, points);
+                            } catch (Exception e) {
+                                Log.e("****** ERROR!!!! ******", "points were not added to map.");
+                            }
+
 
                             // adding HashList to ArrayList
-                            productsList.add(map);
+                            try {
+                                productsList.add(map);
+                            } catch (Exception e) {
+                                Log.e("****** ERROR!!!! ******",
+                                        "map wasn't added to productsList.");
+                            }
                         }
-                }
-//                else {
+                } else {
+                    Log.e("****** ERROR!!!! ******", "Pull was unsuccessful.");
 //                    // no products found
 //                    // Launch Add New product Activity
 //                    Intent i = new Intent(getApplicationContext(),
@@ -240,11 +276,10 @@ public class RewardActivity extends ListActivity {
 //                    // Closing all previous activities
 //                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 //                    startActivity(i);
-//                }
+                }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
             return null;
         }
 
@@ -263,8 +298,8 @@ public class RewardActivity extends ListActivity {
                     ListAdapter adapter = new SimpleAdapter(
                             RewardActivity.this, productsList,
                             R.layout.list_item, new String[]{TAG_STORE,
-                            TAG_VALUE},
-                            new int[]{R.id.store, R.id.value});
+                            TAG_POINTS},
+                            new int[]{R.id.store, R.id.points});
                     // updating listview
                     setListAdapter(adapter);
                 }

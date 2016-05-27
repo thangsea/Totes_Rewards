@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -33,7 +34,7 @@ public class PopupActivity extends Activity implements OnClickListener {
     private static final String TAG_STORE = "store";
     private static final String TAG_POINTS = "points";
     private static final String TAG_CODE = "code";
-    final Intent menuIntent = new Intent(this, MenuActivity.class);
+    final Intent menuIntent = new Intent(PopupActivity.this, MenuActivity.class);
 
 
     @Override
@@ -128,13 +129,16 @@ public class PopupActivity extends Activity implements OnClickListener {
             try {
                 int success = json.getInt(TAG_SUCCESS);
 
+                if (json != null) {
+                    Log.d("**** All Products ****", json.toString());
+                }
+
                 if (success == 1) {
-                    startActivity(menuIntent);
+                    startActivity(new Intent(PopupActivity.this, MenuActivity.class));
                     //pDialog.dismiss();
                     finish();
                 } else {
-                    final Intent scanIntent = new Intent(PopupActivity.this, ScanActivity.class);
-                    startActivity(scanIntent);
+                    startActivity(new Intent(PopupActivity.this, ScanActivity.class));
                     //pDialog.dismiss();
                     finish();
                 }

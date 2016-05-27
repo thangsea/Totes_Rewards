@@ -367,11 +367,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 if (success == 1) {
                    // Toast.makeText(LoginActivity.this, "Account has been added",
                     //        Toast.LENGTH_LONG).show();
-                    Log.d("Success", Integer.toString(success));
+                    Log.d("Success", Integer.toString(success) + ": The account was added.");
                     StartMenu();
                     finish();
                 } else {
-                    Log.d("Failed", Integer.toString(success));
+                    Log.e("****** ERROR!!!! ******", Integer.toString(success));
                     //Toast.makeText(LoginActivity.this, "Account Was Not Added, Please try Again",
                             //Toast.LENGTH_LONG).show();
                     StartMenu();
