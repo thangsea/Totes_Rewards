@@ -18,8 +18,6 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.util.Log;
-
 
 public class PopupActivity extends Activity implements OnClickListener {
 
@@ -29,9 +27,11 @@ public class PopupActivity extends Activity implements OnClickListener {
     String results;
     String[] value;
     JSONParser jsonParser = new JSONParser();
-    String url_create_code;
     String url_add_reward;
     private static final String TAG_SUCCESS = "success";
+    private static final String TAG_USER_NAME = "username";
+    private static final String TAG_STORE = "store";
+    private static final String TAG_POINTS = "points";
     private static final String TAG_CODE = "code";
     final Intent menuIntent = new Intent(this, MenuActivity.class);
 
@@ -107,18 +107,17 @@ public class PopupActivity extends Activity implements OnClickListener {
 
             // URL to update a store with the scanned reward.
             url_add_reward =
-                    "http://cssgate.insttech.washington.edu/~luiss3/create_scan.php";
+                    "http://cssgate.insttech.washington.edu/~luiss3/add.php";
 
             // Building Parameters
             List<NameValuePair> params = new ArrayList<NameValuePair>();
 
-            String email = PrefUtils.getFromPrefs(PopupActivity.this, "email", "null");
-            String password = PrefUtils.getFromPrefs(PopupActivity.this, "password", "null");
+            params.add(new BasicNameValuePair(TAG_USER_NAME,
+                    PrefUtils.getFromPrefs(PopupActivity.this, "email", "null")));
 
-            params.add(new BasicNameValuePair("storename", value[0]));
-            params.add(new BasicNameValuePair("value", value[1]));
-            params.add(new BasicNameValuePair("email", email));
-            params.add(new BasicNameValuePair("password", password));
+            params.add(new BasicNameValuePair(TAG_STORE, value[0]));
+            params.add(new BasicNameValuePair(TAG_POINTS, value[1]));
+
 
             // getting JSON Object
             // Note that create product url accepts POST method
