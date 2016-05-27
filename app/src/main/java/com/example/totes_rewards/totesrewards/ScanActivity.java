@@ -206,4 +206,10 @@ public class ScanActivity extends AppCompatActivity {
         AppIndex.AppIndexApi.end(client, viewAction);
         client.disconnect();
     }
+
+    public void backButton (View view) {
+        Intent intent = new Intent(ScanActivity.this, MenuActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }

@@ -113,7 +113,7 @@ public class PopupActivity extends Activity implements OnClickListener {
             List<NameValuePair> params = new ArrayList<NameValuePair>();
 
             params.add(new BasicNameValuePair(TAG_USER_NAME,
-                    PrefUtils.getFromPrefs(PopupActivity.this, "email", "null")));
+                    PrefUtils.getFromPrefs(PopupActivity.this, TAG_USER_NAME, "null")));
 
             params.add(new BasicNameValuePair(TAG_STORE, value[0]));
             params.add(new BasicNameValuePair(TAG_POINTS, value[1]));

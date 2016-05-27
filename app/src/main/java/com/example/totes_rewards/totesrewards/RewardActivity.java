@@ -315,4 +315,10 @@ public class RewardActivity extends ListActivity {
         super.onPause();  // Always call the superclass method first
         pDialog.dismiss();
     }
+
+    public void backButton (View view) {
+        Intent intent = new Intent(RewardActivity.this, MenuActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }
